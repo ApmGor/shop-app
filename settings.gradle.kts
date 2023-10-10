@@ -9,4 +9,4 @@ pluginManagement {
     includeBuild("gradle/plugins")
 }
 
-//include("product-service")
+include("product-service")

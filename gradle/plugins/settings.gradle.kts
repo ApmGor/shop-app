@@ -1,4 +1,4 @@
-pluginManagement {
+dependencyResolutionManagement {
     repositories.gradlePluginPortal()
 }
 

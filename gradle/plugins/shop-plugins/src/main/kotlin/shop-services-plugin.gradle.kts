@@ -1,6 +1,3 @@
-import org.gradle.api.plugins.jvm.JvmTestSuite
-import org.gradle.kotlin.dsl.`java-library`
-
 plugins {
     `java-library`
     id("org.springframework.boot")
@@ -11,7 +8,7 @@ group = "ru.apmgor"
 version = "0.0.1-SNAPSHOT"
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_17
+    toolchain.languageVersion.set(JavaLanguageVersion.of(17))
 }
 
 configurations {
@@ -20,12 +17,7 @@ configurations {
     }
 }
 
-repositories {
-    mavenCentral()
-}
-
 dependencies {
-    implementation("org.springframework.boot:spring-boot-starter-data-mongodb-reactive")
     implementation("org.springframework.boot:spring-boot-starter-webflux")
     compileOnly("org.projectlombok:lombok")
     annotationProcessor("org.projectlombok:lombok")
