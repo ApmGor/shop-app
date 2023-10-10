@@ -11,7 +11,7 @@ import ru.apmgor.productservice.repository.ProductRepository;
 
 @Service
 @RequiredArgsConstructor
-public class ProductService {
+public final class ProductService {
 
     private final ProductRepository repository;
 
@@ -47,6 +47,11 @@ public class ProductService {
 
     public Mono<Void> deleteProduct(final String id) {
         return repository.deleteById(id);
+    }
+
+    public Flux<ProductDto> getPriceBetween(final int min, final int max) {
+        return repository.findByPriceBetween(min, max)
+                .map(ProductMapper::toDto);
     }
 
 }
