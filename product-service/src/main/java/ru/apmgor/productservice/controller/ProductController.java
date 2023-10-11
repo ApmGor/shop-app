@@ -59,8 +59,8 @@ public final class ProductController {
 
     @GetMapping("/search")
     public Flux<ProductDto> allProductsWithPriceBetween(
-            @RequestParam() final int max,
-            @RequestParam final int min) {
+            @RequestParam final int min,
+            @RequestParam final int max) {
         return service.getPriceBetween(min, max);
     }
 
