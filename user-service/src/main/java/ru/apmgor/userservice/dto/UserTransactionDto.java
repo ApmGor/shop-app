@@ -1,13 +1,13 @@
 package ru.apmgor.userservice.dto;
 
-import java.time.LocalDateTime;
+import lombok.Builder;
+import lombok.With;
 
+@Builder
 public record UserTransactionDto(
-        Integer id,
         Integer userId,
         Integer amount,
-        LocalDateTime transactionDate,
-        TransactionStatus status
+        @With TransactionStatus status
 ) {
     public enum TransactionStatus {
         APPROVED, DECLINED
