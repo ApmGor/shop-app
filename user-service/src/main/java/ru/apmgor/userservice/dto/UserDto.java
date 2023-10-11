@@ -4,7 +4,7 @@ import lombok.Builder;
 
 @Builder
 public record UserDto(
-        int id,
+        Integer id,
         String name,
-        int balance
+        Integer balance
 ) {}

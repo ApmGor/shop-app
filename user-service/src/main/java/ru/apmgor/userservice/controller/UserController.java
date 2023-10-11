@@ -55,15 +55,3 @@ public final class UserController {
         return service.deleteUser(id);
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
