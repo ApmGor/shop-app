@@ -1,0 +1,24 @@
+services:
+  postgres-user:
+    image: postgres
+    environment:
+      POSTGRES_USER: user_user
+      POSTGRES_PASSWORD: user_pwd
+      POSTGRES_DB: user_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - "./init:/docker-entrypoint-initdb.d"
+  user-service:
+    build:
+      context: ..
+      dockerfile: user.Dockerfile
+    image: user-service
+    depends_on:
+      - postgres-user
+    env_file:
+      - "env/user.env"
+    ports:
+      - "8080:8080"
+    profiles:
+      - app
