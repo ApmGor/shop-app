@@ -16,7 +16,7 @@ import static ru.apmgor.userservice.controller.UserUtil.USER_PATH;
 @SpringBootTest
 @AutoConfigureWebTestClient
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class UserServiceIT extends BaseTest {
+public final class UserServiceIT extends BaseTest {
 
     @Autowired
     private WebTestClient webTestClient;

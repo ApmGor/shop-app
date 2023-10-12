@@ -1,6 +1,5 @@
 package ru.apmgor.userservice.entity;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Value;
 import org.springframework.data.annotation.Id;
