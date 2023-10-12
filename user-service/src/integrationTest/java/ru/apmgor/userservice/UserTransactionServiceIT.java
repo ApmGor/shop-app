@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.reactive.server.WebTestClient;
-import ru.apmgor.userservice.dto.UserTransactionDto;
+import ru.apmgor.userservice.dto.UserTransactionStatusDto;
 import ru.apmgor.userservice.generic.BaseTest;
 
 import static ru.apmgor.userservice.controller.UserUtil.USER_TRANSACTION_PATH;
@@ -26,10 +26,7 @@ public final class UserTransactionServiceIT extends BaseTest {
     @Test
     @Order(1)
     public void createTransactionTest() {
-        var dto = UserTransactionDto.builder()
-                .userId(3)
-                .amount(250)
-                .build();
+        var dto = new UserTransactionStatusDto(3, 250);
         webTestClient.post()
                 .uri(USER_TRANSACTION_PATH)
                 .bodyValue(dto)
@@ -41,10 +38,7 @@ public final class UserTransactionServiceIT extends BaseTest {
 
     @Test
     public void createTransactionFailureTest() {
-        var dto = UserTransactionDto.builder()
-                .userId(30)
-                .amount(250)
-                .build();
+        var dto = new UserTransactionStatusDto(30, 250);
         webTestClient.post()
                 .uri(USER_TRANSACTION_PATH)
                 .bodyValue(dto)

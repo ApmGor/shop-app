@@ -1,37 +1,37 @@
 package ru.apmgor.userservice.mapper;
 
 import org.springframework.stereotype.Component;
-import ru.apmgor.userservice.dto.UserFullTransactionDto;
-import ru.apmgor.userservice.dto.UserTransactionDto;
+import ru.apmgor.userservice.dto.UserTransactionFullDto;
+import ru.apmgor.userservice.dto.UserTransactionStatusDto;
 import ru.apmgor.userservice.entity.UserTransaction;
 
 import java.time.LocalDateTime;
 
 @Component
-public final class UserTransactionMapper implements Mapper<UserTransaction, UserTransactionDto> {
+public final class UserTransactionMapper implements Mapper<UserTransaction, UserTransactionStatusDto> {
 
     @Override
-    public UserTransactionDto toDto(final UserTransaction entity) {
-        return UserTransactionDto.builder()
-                .userId(entity.getUserId())
-                .amount(entity.getAmount())
-                .build();
+    public UserTransactionStatusDto toDto(final UserTransaction entity) {
+        return new UserTransactionStatusDto(
+                entity.getUserId(),
+                entity.getAmount()
+        );
     }
 
-    public UserFullTransactionDto toFullDto(final UserTransaction entity) {
-        return UserFullTransactionDto.builder()
-                .id(entity.getId())
-                .userId(entity.getUserId())
-                .amount(entity.getAmount())
-                .transactionDate(entity.getTransactionDate())
-                .build();
+    public UserTransactionFullDto toFullDto(final UserTransaction entity) {
+        return new UserTransactionFullDto(
+                entity.getId(),
+                entity.getUserId(),
+                entity.getAmount(),
+                entity.getTransactionDate()
+        );
     }
 
     @Override
-    public UserTransaction toEntity(final UserTransactionDto dto) {
+    public UserTransaction toEntity(final UserTransactionStatusDto dto) {
         return UserTransaction.builder()
-                .userId(dto.userId())
-                .amount(dto.amount())
+                .userId(dto.getUserId())
+                .amount(dto.getAmount())
                 .transactionDate(LocalDateTime.now())
                 .build();
     }

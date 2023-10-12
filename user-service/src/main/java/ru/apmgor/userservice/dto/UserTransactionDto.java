@@ -1,11 +1,13 @@
 package ru.apmgor.userservice.dto;
 
-import lombok.Builder;
-import lombok.With;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Builder
-public record UserTransactionDto(
-        Integer userId,
-        Integer amount,
-        @With TransactionStatus status
-) {}
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class UserTransactionDto {
+    private Integer userId;
+    private Integer amount;
+}
