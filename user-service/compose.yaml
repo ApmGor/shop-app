@@ -9,3 +9,16 @@ services:
       - "5432:5432"
     volumes:
       - "./init:/docker-entrypoint-initdb.d"
+  user-service:
+    build:
+      context: ..
+      dockerfile: user.Dockerfile
+    image: user-service
+    depends_on:
+      - postgres-user
+    env_file:
+      - "env/user.env"
+    ports:
+      - "8080:8080"
+    profiles:
+      - app
