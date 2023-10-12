@@ -1,6 +1,7 @@
 package ru.apmgor.userservice.mapper;
 
 import org.springframework.stereotype.Component;
+import ru.apmgor.userservice.dto.UserFullTransactionDto;
 import ru.apmgor.userservice.dto.UserTransactionDto;
 import ru.apmgor.userservice.entity.UserTransaction;
 
@@ -14,6 +15,15 @@ public final class UserTransactionMapper implements Mapper<UserTransaction, User
         return UserTransactionDto.builder()
                 .userId(entity.getUserId())
                 .amount(entity.getAmount())
+                .build();
+    }
+
+    public UserFullTransactionDto toFullDto(final UserTransaction entity) {
+        return UserFullTransactionDto.builder()
+                .id(entity.getId())
+                .userId(entity.getUserId())
+                .amount(entity.getAmount())
+                .transactionDate(entity.getTransactionDate())
                 .build();
     }
 

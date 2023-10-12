@@ -8,8 +8,4 @@ public record UserTransactionDto(
         Integer userId,
         Integer amount,
         @With TransactionStatus status
-) {
-    public enum TransactionStatus {
-        APPROVED, DECLINED
-    }
-}
+) {}

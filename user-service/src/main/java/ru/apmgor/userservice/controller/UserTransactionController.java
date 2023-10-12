@@ -2,11 +2,10 @@ package ru.apmgor.userservice.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import ru.apmgor.userservice.dto.UserFullTransactionDto;
 import ru.apmgor.userservice.dto.UserTransactionDto;
 import ru.apmgor.userservice.service.UserTransactionService;
 
@@ -25,5 +24,10 @@ public final class UserTransactionController {
         return dtoMono
                 .flatMap(service::createTransaction)
                 .map(ResponseEntity::ok);
+    }
+
+    @GetMapping()
+    public Flux<UserFullTransactionDto> allUserTransactions(@RequestParam final Integer userId) {
+        return service.getAllUserTransactions(userId);
     }
 }
