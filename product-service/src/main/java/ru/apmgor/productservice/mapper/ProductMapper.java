@@ -1,9 +1,11 @@
 package ru.apmgor.productservice.mapper;
 
+import org.springframework.stereotype.Component;
 import ru.apmgor.mapper.Mapper;
 import ru.apmgor.productservice.dto.ProductDto;
 import ru.apmgor.productservice.entity.Product;
 
+@Component
 public class ProductMapper implements Mapper<Product, ProductDto> {
 
     public ProductDto toDto(final Product product) {

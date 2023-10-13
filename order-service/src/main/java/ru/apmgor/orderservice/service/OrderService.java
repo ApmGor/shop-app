@@ -2,6 +2,7 @@ package ru.apmgor.orderservice.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
 import reactor.util.function.Tuple2;
@@ -10,12 +11,15 @@ import ru.apmgor.orderservice.client.UserServiceClient;
 import ru.apmgor.orderservice.dto.OrderRequestDto;
 import ru.apmgor.orderservice.dto.OrderResponseDto;
 import ru.apmgor.orderservice.dto.OrderStatus;
+import ru.apmgor.orderservice.entity.Order;
 import ru.apmgor.orderservice.mapper.OrderMapper;
 import ru.apmgor.orderservice.repository.OrderRepository;
 import ru.apmgor.productservice.dto.ProductDto;
 import ru.apmgor.userservice.dto.TransactionStatus;
 import ru.apmgor.userservice.dto.UserTransactionDto;
 import ru.apmgor.userservice.dto.UserTransactionStatusDto;
+
+import java.util.stream.StreamSupport;
 
 @Service
 @RequiredArgsConstructor
@@ -37,7 +41,14 @@ public final class OrderService {
                 .map(this::createORespDtoFrom)
                 .map(mapper::toEntity)
                 .publishOn(Schedulers.boundedElastic())
-                .map(repository::save)
+                .map(repository::save) // блокирующий вызов, нужно выполнять в фоновом потоке
+                .map(mapper::toDto);
+    }
+
+    public Flux<OrderResponseDto> getAllUserOrders(final Integer userId) {
+        return Flux.fromStream(() -> StreamSupport
+                        .stream(repository.findOrderByUserId(userId).spliterator(), false))
+                .subscribeOn(Schedulers.boundedElastic())
                 .map(mapper::toDto);
     }
 

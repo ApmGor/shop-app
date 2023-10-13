@@ -12,6 +12,7 @@ import ru.apmgor.productservice.service.ProductService;
 
 import java.net.URI;
 import java.time.Duration;
+import java.util.concurrent.ThreadLocalRandom;
 
 import static org.springframework.http.ResponseEntity.*;
 import static ru.apmgor.productservice.controller.RequestUtil.ID;
@@ -31,6 +32,7 @@ public final class ProductController {
 
     @GetMapping("{"+ ID +"}")
     public Mono<ResponseEntity<ProductDto>> oneProduct(@PathVariable final String id) {
+        simulateRandomException();
         return service.getOneProduct(id)
                 .map(this::response)
                 .defaultIfEmpty(notFound().build());
@@ -69,6 +71,11 @@ public final class ProductController {
                 .contentType(MediaType.APPLICATION_JSON)
                 .cacheControl(CacheControl.maxAge(Duration.ofSeconds(60)))
                 .body(dto);
+    }
+
+    private void simulateRandomException() {
+        int num = ThreadLocalRandom.current().nextInt(1, 10);
+        if (num > 5) throw new RuntimeException("Something is wrong");
     }
 
 }
