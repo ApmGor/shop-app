@@ -9,11 +9,11 @@ public final class UserMapper implements Mapper<User, UserDto> {
 
     @Override
     public UserDto toDto(final User user) {
-        return UserDto.builder()
-                .id(user.getId())
-                .name(user.getName())
-                .balance(user.getBalance())
-                .build();
+        return new UserDto(
+                user.getId(),
+                user.getName(),
+                user.getBalance()
+        );
     }
 
     @Override

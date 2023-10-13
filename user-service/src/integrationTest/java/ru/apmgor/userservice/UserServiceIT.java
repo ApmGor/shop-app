@@ -51,10 +51,7 @@ public final class UserServiceIT extends BaseTest {
 
     @Test
     public void saveUserTest() {
-        var dto = UserDto.builder()
-                .name("rick")
-                .balance(6000)
-                .build();
+        var dto = new UserDto("rick", 6000);
         webTestClient.post()
                 .uri(USER_PATH)
                 .bodyValue(dto)
@@ -66,10 +63,7 @@ public final class UserServiceIT extends BaseTest {
 
     @Test
     public void updateUserTest() {
-        var dto = UserDto.builder()
-                .name("john")
-                .balance(7000)
-                .build();
+        var dto = new UserDto("john", 7000);
         webTestClient.put()
                 .uri(USER_PATH + "/4")
                 .bodyValue(dto)
@@ -79,10 +73,7 @@ public final class UserServiceIT extends BaseTest {
 
     @Test
     public void updateUserFailureTest() {
-        var dto = UserDto.builder()
-                .name("john")
-                .balance(7000)
-                .build();
+        var dto = new UserDto("john", 7000);
         webTestClient.put()
                 .uri(USER_PATH + "/10")
                 .bodyValue(dto)

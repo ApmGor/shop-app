@@ -45,6 +45,7 @@ public final class UserTransactionServiceIT extends BaseTest {
                 .exchange()
                 .expectStatus().is2xxSuccessful()
                 .expectBody()
+                .consumeWith(System.out::println)
                 .jsonPath("$.status").isEqualTo(DECLINED.toString());
     }
 

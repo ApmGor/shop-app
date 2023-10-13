@@ -11,3 +11,4 @@ pluginManagement {
 
 include("product-service")
 include("user-service")
+include("common")

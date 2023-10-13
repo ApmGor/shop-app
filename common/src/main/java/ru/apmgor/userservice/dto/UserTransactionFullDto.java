@@ -1,15 +1,10 @@
 package ru.apmgor.userservice.dto;
 
-import lombok.EqualsAndHashCode;
-import lombok.Value;
-
 import java.time.LocalDateTime;
 
-@EqualsAndHashCode(callSuper = true)
-@Value
 public class UserTransactionFullDto extends UserTransactionDto {
-    Integer id;
-    LocalDateTime transactionDate;
+    private final Integer id;
+    private final LocalDateTime transactionDate;
 
     public UserTransactionFullDto(
             final Integer id,
@@ -19,5 +14,13 @@ public class UserTransactionFullDto extends UserTransactionDto {
         super(userId, amount);
         this.id = id;
         this.transactionDate = transactionDate;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public LocalDateTime getTransactionDate() {
+        return transactionDate;
     }
 }
