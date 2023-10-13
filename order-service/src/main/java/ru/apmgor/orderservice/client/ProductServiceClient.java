@@ -7,7 +7,7 @@ import reactor.core.publisher.Mono;
 import ru.apmgor.productservice.dto.ProductDto;
 
 @Component
-public class ProductServiceClient {
+public final class ProductServiceClient {
 
     private final WebClient webClient;
 

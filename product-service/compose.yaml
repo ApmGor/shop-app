@@ -14,7 +14,7 @@ services:
     depends_on:
       - mongo-product
     ports:
-      - "8081:8081"
+      - "8091:8081"
     environment:
       ME_CONFIG_MONGODB_ADMINUSERNAME: "admin"
       ME_CONFIG_MONGODB_ADMINPASSWORD: "admin"
@@ -27,7 +27,7 @@ services:
     env_file:
       - env/product.env
     ports:
-      - "8080:8080"
+      - "8081:8080"
     depends_on:
       - mongo-product
     profiles:

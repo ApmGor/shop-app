@@ -10,6 +10,10 @@ COPY product-service/build.gradle.kts product-service/build.gradle.kts
 
 COPY gradle/plugins gradle/plugins
 
+COPY common/src common/src
+
+COPY common/build.gradle.kts common/build.gradle.kts
+
 RUN gradle clean assemble
 
 #------------------------------------------------------

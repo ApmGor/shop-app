@@ -20,6 +20,7 @@ configurations {
 dependencies {
     api(project(":common"))
     implementation("org.springframework.boot:spring-boot-starter-webflux")
+    implementation("io.projectreactor:reactor-tools")
     compileOnly("org.projectlombok:lombok")
     annotationProcessor("org.projectlombok:lombok")
     api("org.springframework.boot:spring-boot-starter-test")
