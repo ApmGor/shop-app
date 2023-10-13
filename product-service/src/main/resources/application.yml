@@ -6,3 +6,5 @@ spring:
       host: "${MONGO_HOST:localhost}"
       password: "${MONGO_PWD:product_pwd}"
       username: "${MONGO_USER:product_user}"
+server:
+  port: 8081

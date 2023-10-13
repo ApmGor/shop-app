@@ -1,1 +1,5 @@
-
+services:
+  product:
+    url: "http://localhost:8081"
+  user:
+    url: "http://localhost:8082"
