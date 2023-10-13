@@ -1,4 +1,4 @@
-package ru.apmgor.userservice.mapper;
+package ru.apmgor.mapper;
 
 public interface Mapper<E, D> {
     D toDto(final E entity);

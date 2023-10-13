@@ -1,6 +1,7 @@
 package ru.apmgor.userservice.mapper;
 
 import org.springframework.stereotype.Component;
+import ru.apmgor.mapper.Mapper;
 import ru.apmgor.userservice.dto.UserDto;
 import ru.apmgor.userservice.entity.User;
 

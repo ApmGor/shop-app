@@ -14,20 +14,21 @@ import ru.apmgor.productservice.repository.ProductRepository;
 public final class ProductService {
 
     private final ProductRepository repository;
+    private final ProductMapper mapper;
 
     public Flux<ProductDto> getAllProducts() {
         return repository.findAll()
-                .map(ProductMapper::toDto);
+                .map(mapper::toDto);
     }
 
     public Mono<ProductDto> getOneProduct(final String id) {
         return repository.findById(id)
-                .map(ProductMapper::toDto);
+                .map(mapper::toDto);
     }
 
     public Mono<String> saveProduct(final Mono<ProductDto> dtoMono) {
         return dtoMono
-                .map(ProductMapper::toEntity)
+                .map(mapper::toEntity)
                 .flatMap(repository::insert)
                 .map(Product::getId);
     }
@@ -36,12 +37,12 @@ public final class ProductService {
         return repository.findById(id)
                 .flatMap(product -> converter(id, dtoMono))
                 .flatMap(repository::save)
-                .map(ProductMapper::toDto);
+                .map(mapper::toDto);
     }
 
     private Mono<Product> converter(final String id, final Mono<ProductDto> dtoMono) {
         return dtoMono
-                .map(ProductMapper::toEntity)
+                .map(mapper::toEntity)
                 .map(product -> product.withId(id));
     }
 
@@ -51,7 +52,7 @@ public final class ProductService {
 
     public Flux<ProductDto> getPriceBetween(final int min, final int max) {
         return repository.findByPriceBetween(min, max)
-                .map(ProductMapper::toDto);
+                .map(mapper::toDto);
     }
 
 }

@@ -1,15 +1,17 @@
 package ru.apmgor.orderservice.service;
 
 import lombok.RequiredArgsConstructor;
-import lombok.val;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
+import reactor.core.scheduler.Schedulers;
 import reactor.util.function.Tuple2;
 import ru.apmgor.orderservice.client.ProductServiceClient;
 import ru.apmgor.orderservice.client.UserServiceClient;
 import ru.apmgor.orderservice.dto.OrderRequestDto;
 import ru.apmgor.orderservice.dto.OrderResponseDto;
 import ru.apmgor.orderservice.dto.OrderStatus;
+import ru.apmgor.orderservice.mapper.OrderMapper;
+import ru.apmgor.orderservice.repository.OrderRepository;
 import ru.apmgor.productservice.dto.ProductDto;
 import ru.apmgor.userservice.dto.TransactionStatus;
 import ru.apmgor.userservice.dto.UserTransactionDto;
@@ -21,6 +23,8 @@ public final class OrderService {
 
     private final ProductServiceClient productClient;
     private final UserServiceClient serviceClient;
+    private final OrderRepository repository;
+    private final OrderMapper mapper;
 
     public Mono<OrderResponseDto> createOrder(final Mono<OrderRequestDto> shareMono) {
         return shareMono
@@ -30,7 +34,11 @@ public final class OrderService {
                 .map(this::createUTSDtoFrom)
                 .flatMap(serviceClient::createUserTransaction)
                 .zipWith(shareMono)
-                .map(this::createORespDtoFrom);
+                .map(this::createORespDtoFrom)
+                .map(mapper::toEntity)
+                .publishOn(Schedulers.boundedElastic())
+                .map(repository::save)
+                .map(mapper::toDto);
     }
 
     private OrderResponseDto createORespDtoFrom(final Tuple2<UserTransactionStatusDto, OrderRequestDto> tuple) {

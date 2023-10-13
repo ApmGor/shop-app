@@ -1,12 +1,12 @@
 package ru.apmgor.productservice.mapper;
 
+import ru.apmgor.mapper.Mapper;
 import ru.apmgor.productservice.dto.ProductDto;
 import ru.apmgor.productservice.entity.Product;
 
-public class ProductMapper {
-    private ProductMapper() {}
+public class ProductMapper implements Mapper<Product, ProductDto> {
 
-    public static ProductDto toDto(final Product product) {
+    public ProductDto toDto(final Product product) {
         return new ProductDto(
                 product.getId(),
                 product.getDescription(),
@@ -14,7 +14,7 @@ public class ProductMapper {
         );
     }
 
-    public static Product toEntity(final ProductDto dto) {
+    public Product toEntity(final ProductDto dto) {
         return new Product(
                 dto.id(),
                 dto.description(),

@@ -4,9 +4,8 @@ services:
   user:
     url: "http://localhost:8082"
 
-#spring:
-#  datasource:
-#    name: "${POSTGRES_DB:order_db}"
-#    username: "${POSTGRES_USER:order_user}"
-#    password: "${POSTGRES_PWD:order_pwd}"
-#    url: "jdbc:postgresql://${POSTGRES_URL:localhost}:${POSTGRES_PORT:5432}"
+spring:
+  datasource:
+    username: "${POSTGRES_USER:order_user}"
+    password: "${POSTGRES_PWD:order_pwd}"
+    url: "jdbc:postgresql://${POSTGRES_URL:localhost}:${POSTGRES_PORT:5433}/${POSTGRES_DB:order_db}"
