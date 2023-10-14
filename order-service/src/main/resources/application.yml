@@ -1,8 +1,8 @@
 services:
   product:
-    url: "http://localhost:8081"
+    url: "${PRODUCT_SERVICE_URL:http://localhost:8081}"
   user:
-    url: "http://localhost:8082"
+    url: "${USER_SERVICE_URL:http://localhost:8082}"
 
 spring:
   datasource:

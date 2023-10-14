@@ -11,7 +11,6 @@ import ru.apmgor.orderservice.client.UserServiceClient;
 import ru.apmgor.orderservice.dto.OrderRequestDto;
 import ru.apmgor.orderservice.dto.OrderResponseDto;
 import ru.apmgor.orderservice.dto.OrderStatus;
-import ru.apmgor.orderservice.entity.Order;
 import ru.apmgor.orderservice.mapper.OrderMapper;
 import ru.apmgor.orderservice.repository.OrderRepository;
 import ru.apmgor.productservice.dto.ProductDto;

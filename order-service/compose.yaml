@@ -1,5 +1,5 @@
 services:
-  postgres-user:
+  order-postgres:
     image: postgres
     environment:
       POSTGRES_USER: order_user
@@ -9,3 +9,16 @@ services:
       - "5433:5432"
     volumes:
       - "./init:/docker-entrypoint-initdb.d"
+  order-service:
+    build:
+      context: ..
+      dockerfile: order.Dockerfile
+    image: order-service
+    env_file:
+      - env/order.env
+    ports:
+      - "8080:8080"
+    depends_on:
+      - order-postgres
+    profiles:
+      - app
