@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import reactor.core.publisher.Sinks;
 import ru.apmgor.productservice.dto.ProductDto;
 import ru.apmgor.productservice.entity.Product;
 import ru.apmgor.productservice.mapper.ProductMapper;
@@ -15,6 +16,7 @@ public final class ProductService {
 
     private final ProductRepository repository;
     private final ProductMapper mapper;
+    private final Sinks.Many<ProductDto> sink;
 
     public Flux<ProductDto> getAllProducts() {
         return repository.findAll()
@@ -30,7 +32,9 @@ public final class ProductService {
         return dtoMono
                 .map(mapper::toEntity)
                 .flatMap(repository::insert)
-                .map(Product::getId);
+                .map(mapper::toDto)
+                .doOnNext(sink::tryEmitNext)
+                .map(ProductDto::id);
     }
 
     public Mono<ProductDto> updateProduct(final String id, final Mono<ProductDto> dtoMono) {

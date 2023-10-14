@@ -32,7 +32,7 @@ public final class ProductController {
 
     @GetMapping("{"+ ID +"}")
     public Mono<ResponseEntity<ProductDto>> oneProduct(@PathVariable final String id) {
-        simulateRandomException();
+//        simulateRandomException();
         return service.getOneProduct(id)
                 .map(this::response)
                 .defaultIfEmpty(notFound().build());
@@ -73,9 +73,9 @@ public final class ProductController {
                 .body(dto);
     }
 
-    private void simulateRandomException() {
-        int num = ThreadLocalRandom.current().nextInt(1, 10);
-        if (num > 5) throw new RuntimeException("Something is wrong");
-    }
+//    private void simulateRandomException() {
+//        int num = ThreadLocalRandom.current().nextInt(1, 10);
+//        if (num > 5) throw new RuntimeException("Something is wrong");
+//    }
 
 }
