@@ -3,7 +3,9 @@ package ru.apmgor.orderservice.client;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import ru.apmgor.userservice.dto.UserDto;
 import ru.apmgor.userservice.dto.UserTransactionDto;
 import ru.apmgor.userservice.dto.UserTransactionStatusDto;
 
@@ -22,5 +24,12 @@ public final class UserServiceClient {
                 .bodyValue(dto)
                 .retrieve()
                 .bodyToMono(UserTransactionStatusDto.class);
+    }
+
+    public Flux<UserDto> getAllUsers() {
+        return userServiceClient.get()
+                .uri("/users")
+                .retrieve()
+                .bodyToFlux(UserDto.class);
     }
 }
