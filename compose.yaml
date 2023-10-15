@@ -1,0 +1,62 @@
+services:
+  mongo-product:
+    image: mongo
+    volumes:
+      - "./product-service/init:/docker-entrypoint-initdb.d"
+  product-service:
+    build:
+      context: .
+      dockerfile: product.Dockerfile
+    image: product-service
+    ports:
+      - "8081:8080"
+    env_file:
+      - "product-service/env/product.env"
+    depends_on:
+      - mongo-product
+
+# User Service ------------------------------------------------------------
+
+  postgres-user:
+    image: postgres
+    environment:
+      POSTGRES_USER: user_user
+      POSTGRES_PASSWORD: user_pwd
+      POSTGRES_DB: user_db
+    volumes:
+      - "./user-service/init:/docker-entrypoint-initdb.d"
+  user-service:
+    build:
+      context: .
+      dockerfile: user.Dockerfile
+    image: user-service
+    depends_on:
+      - postgres-user
+      - product-service
+    env_file:
+      - "user-service/env/user.env"
+
+# Order Service ---------------------------------------------------------
+
+  order-postgres:
+    image: postgres
+    environment:
+      POSTGRES_USER: order_user
+      POSTGRES_PASSWORD: order_pwd
+      POSTGRES_DB: order_db
+    volumes:
+      - "./order-service/init:/docker-entrypoint-initdb.d"
+  order-service:
+    build:
+      context: .
+      dockerfile: order.Dockerfile
+    image: order-service
+    restart: unless-stopped
+    env_file:
+      - "order-service/env/order.env"
+    ports:
+      - "8080:8080"
+    depends_on:
+      - order-postgres
+      - product-service
+      - user-service
